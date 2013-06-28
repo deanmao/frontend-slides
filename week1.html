@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Hushfind Tech</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+    
+    <style>
+    svg {
+      display: inline-block;
+    }
+    
+    text {
+      font: 300 16px "Helvetica Neue";
+    }
+
+    rect {
+      fill: #fff;
+    }
+
+    .node > rect {
+      stroke-width: 3px;
+      stroke: #333;
+      fill: none;
+    }
+
+    .node:hover {
+      cursor: pointer;
+      opacity: 0.4;
+    }
+
+    .edge rect {
+      fill: #fff
+    }
+
+    .edge path {
+      fill: none;
+      stroke: #333;
+      stroke-width: 1.5px;
+    }
+
+    .edge:hover {
+      cursor: pointer;
+      opacity: 0.4;
+    }
+
+    .cp {
+      opacity: 0;
+    }
+
+    .cp:hover {
+      cursor:pointer;
+      opacity: 1;
+    }
+    
+    .big pre {
+      margin-left: -50px;
+      width: 1100px;
+    }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <script src="/js/d3.v2.min.js"></script>
+    <script src="/js/dagre.min.js"></script>
+  </head>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h1>Frontend Dev Week 1</h1>
+          <h3>The Landscape</h3>
+          <p>
+            <small><a href="mailto:dean.mao@reputation.com">Dean Mao</a></small>
+          </p>
+          <p><img src="http://www.reputation.com/pub/assets/img/logos/logo-marketing-header.png" style="border:none; box-shadow:none; background:none"></p>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## What is frontend dev?
+
+            - server side controller code
+            - structured content via html
+            - styling via css
+            - interaction via javascript
+
+          </script>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Frontend development in 2007:
+
+              - Birth of the MVC frameworks (Rails, Django)
+              - Prototype vs jQuery
+              - CSS 2.1
+              - Flash objects
+              - IE6/7, Firefox 2
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Acid3 test
+
+              ![](images/acid3.png "Acid3")
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Acid3 in IE6
+
+              ![](images/ie6_acid3.png "Acid3 with IE6")
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Acid3 in Firefox 2
+
+              ![](images/ff2_acid3.png "Acid3 with Firefox 2")
+            </script>
+          </section>
+          
+          <section data-markdown>
+            <script type="text/template">
+              ## Prototype JS
+
+              ```
+              var Person = Class.create();
+              Person.prototype = {
+                initialize: function(name) {
+                  this.name = name;
+                },
+                say: function(message) {
+                  return this.name + ': ' + message;
+                }
+              };
+              ```
+            </script>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Frontend development in 2013:
+
+              - Birth of the MVVC JS frameworks
+              - jQuery, Underscore, CoffeeScript
+              - CSS 3, webfonts, boilerplates, bootstrap
+              - advanced tooling
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Birth of the MVVC JS frameworks
+
+              Go here for a [MVVC framework comparison](http://todomvc.com/)
+              
+              - Backbone.js
+              - KnockoutJS
+              - AngularJS
+              - Ember.js
+              - Backbone < Knockout < Angular < Ember
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## jQuery, Underscore, CoffeeScript
+
+              CoffeeScript:
+
+              ```
+              class Person
+                constructor: (@name) ->
+
+                say: (message) ->
+                  "#{@name}: #{message}"
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## CSS 3, webfonts, boilerplates, bootstrap
+
+              ![](images/boilerplate.png)
+            </script>
+          </section>
+          
+          <section data-markdown>
+            <script type="text/template">
+              ## advanced tooling
+              
+              - css = sass
+              - html = haml
+              - javascript = coffeescript
+            </script>
+          </section>
+        </section>
+          
+        <section data-markdown>
+          <script type="text/template">
+            ## Steps to create a web app in 2013
+
+            - Pick a RESTful server-side framework
+            - Write server side logic in models
+            - Generate CRUD controllers
+            - Choose MVVC client-side framework
+            - Write some coffeescript
+            - Choose html/sass boilerplate
+            - Done!
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            # The End
+          </script>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+    <script src="js/graph.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+      
+      Reveal.addEventListener( 'slidechanged', function( event ) {
+          // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+          if (event.currentSlide.getAttribute('name') === 'graph') {
+
+          }
+      } );
+
+    </script>
+
+  </body>
+</html>
