@@ -89,8 +89,8 @@
       <div class="slides">
 
         <section>
-          <h1>Frontend Dev Week 1</h1>
-          <h3>The Landscape</h3>
+          <h1>Frontend Dev Week 2</h1>
+          <h3>CSS Stuff</h3>
           <p>
             <small><a href="mailto:dean.mao@reputation.com">Dean Mao</a></small>
           </p>
@@ -99,145 +99,219 @@
 
         <section data-markdown>
           <script type="text/template">
-            ## What is frontend dev?
+            ## CSS 
 
-            - server side controller code
-            - structured content via html
-            - styling via css
-            - interaction via javascript
-
+            - 2001 CSS
+            - SASS
+            - Best Practices
+            - Tooling
           </script>
         </section>
-
-        <section>
-          <section data-markdown>
-            <script type="text/template">
-              ## Frontend development in 2007:
-
-              - Birth of the MVC frameworks (Rails, Django)
-              - Prototype vs jQuery
-              - CSS 2.1
-              - Flash objects
-              - IE6/7, Firefox 2
-            </script>
-          </section>
-
-          <section data-markdown>
-            <script type="text/template">
-              ## Acid3 test
-
-              ![](images/acid3.png "Acid3")
-            </script>
-          </section>
-
-          <section data-markdown>
-            <script type="text/template">
-              ## Acid3 in IE6
-
-              ![](images/ie6_acid3.png "Acid3 with IE6")
-            </script>
-          </section>
-
-          <section data-markdown>
-            <script type="text/template">
-              ## Acid3 in Firefox 2
-
-              ![](images/ff2_acid3.png "Acid3 with Firefox 2")
-            </script>
-          </section>
-          
-          <section data-markdown>
-            <script type="text/template">
-              ## Prototype JS
-
-              ```
-              var Person = Class.create();
-              Person.prototype = {
-                initialize: function(name) {
-                  this.name = name;
-                },
-                say: function(message) {
-                  return this.name + ': ' + message;
-                }
-              };
-              ```
-            </script>
-          </section>
-        </section>
-
-        <section>
-          <section data-markdown>
-            <script type="text/template">
-              ## Frontend development in 2013:
-
-              - Birth of the MV* JS frameworks
-              - jQuery, Underscore, CoffeeScript
-              - CSS 3, webfonts, boilerplates, bootstrap
-              - advanced tooling
-            </script>
-          </section>
-
-          <section data-markdown>
-            <script type="text/template">
-              ## Birth of the MV* JS frameworks
-
-              Go here for a [MV* framework comparison](http://todomvc.com/)
-              
-              - Backbone.js -- LinkedIn clone
-              - KnockoutJS -- Google Maps clone
-              - AngularJS -- GMail clone
-              - Ember.js -- Facebook clone
-              - Backbone < Knockout < Angular < Ember
-            </script>
-          </section>
-
-          <section data-markdown>
-            <script type="text/template">
-              ## jQuery, Underscore, CoffeeScript
-
-              CoffeeScript:
-
-              ```
-              class Person
-                constructor: (@name) ->
-
-                say: (message) ->
-                  "#{@name}: #{message}"
-              ```
-            </script>
-          </section>
-
-          <section data-markdown>
-            <script type="text/template">
-              ## CSS 3, webfonts, boilerplates, bootstrap
-
-              ![](images/boilerplate.png)
-            </script>
-          </section>
-          
-          <section data-markdown>
-            <script type="text/template">
-              ## advanced tooling
-              
-              - css = sass
-              - html = haml
-              - javascript = coffeescript
-            </script>
-          </section>
-        </section>
-          
+        
         <section data-markdown>
           <script type="text/template">
-            ## Steps to create a web app in 2013
+            ## CSS in 2001
 
-            - Pick a RESTful server-side framework
-            - Write server side logic in models
-            - Generate CRUD controllers
-            - Choose MVVC client-side framework
-            - Write some coffeescript
-            - Choose html/sass boilerplate
-            - Done!
+            - IE6
+            - Reset
+            - Hacks
           </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## SASS 
+
+            - variables
+            - nesting
+            - mixins
+            - inheritance
+            - control flow
+            - custom stuff
+            - SCSS
+          </script>
+        </section>
+        
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Best Practices
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Bad
+              
+              - modifying components based on parent
+              
+              ```
+              .blue {
+                background: blue;
+              }
+              body.homepage .blue {
+                background: red;
+              }
+              body.about .blue {
+                background: yellow;
+              }
+              ```
+            </script>
+          </section>
+          
+          <section data-markdown>
+            <script type="text/template">
+              ## Bad
+              
+              - complicated selectors
+              - happens all the time in sass
+              
+              ```
+              body div div ul li.blue {
+                background: blue;
+              }
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Bad
+              
+              - generic names
+              
+              ```
+              .title {
+                font-size: 20px;
+              }
+              ```
+            </script>
+          </section>
+          
+          <section data-markdown>
+            <script type="text/template">
+              ## Faster loads
+              
+              - css on top, js on bottom
+              - use link tag for parallel
+              - use dns-prefetch
+              - avoid @import
+                -  [frontend SPOF](http://www.stevesouders.com/blog/2010/06/01/frontend-spof)
+              - @font-face is slow 
+                - [font face performance](http://www.stevesouders.com/blog/2009/10/13/font-face-and-performance)
+
+              ```
+              <link rel="dns-prefetch" href="//assets.reputation.com">
+              ```
+            </script>
+          </section>
+        </section>
+        
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Tooling
+
+              - Bourbon
+              - Compass
+              - CSSLint/CSSPool
+              - HTMLInspector
+              - Bootstrap
+              - Modernizr
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Bourbon
+
+              - sass library
+              - vendor prefixes
+              - common mixins
+              - IE6/7 hacks
+
+              ```
+              h1 {
+                font-family: $helvetica;
+                font-size: golden-ratio(14px,  1);
+              }
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Compass
+              
+              - sass library & tooling
+              - sprite management
+              - some borrowed from bourbon
+            </script>
+          </section>
+
+
+          <section data-markdown>
+            <script type="text/template">
+              ## CSSLint/CSSPool
+
+              - remove duplicate rules
+              - syntax checking
+              - inefficient css
+              - write your own rules!
+              - [https://github.com/stubbornella/csslint](https://github.com/stubbornella/csslint)
+            </script>
+          </section>
+          
+          <section data-markdown>
+            <script type="text/template">
+              ## HTML Inspector
+
+              - html "lint"
+              - validation
+              - unused/unnecessary elements
+              - can be called dynamically (one page apps)
+              - write your own rules!
+              - [https://github.com/philipwalton/html-inspector](https://github.com/philipwalton/html-inspector)
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Bootstrap
+              
+              ```
+              <button class="btn btn-large btn-primary">Large button</button>
+              ```
+
+              ![](images/bootstrap_button.png "button")
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Modernizr
+
+              - discover browser-specific css features
+              - graceful fallback
+              
+              ```
+              .csscolumns ol.features {
+               -moz-column-count: 2;
+               -webkit-columns: 2;
+               -o-columns: 2;
+               columns: 2;
+              }
+              .no-csscolumns ol.features {
+               float: left;
+               margin: 0 0 20px;
+              }
+              .no-csscolumns ol.features li {
+               float: left;
+               width: 180px;
+              }
+              ```
+            </script>
+          </section>
         </section>
 
         <section data-markdown>
