@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <style>
+    svg {
+      display: inline-block;
+    }
+
+    text {
+      font: 300 16px "Helvetica Neue";
+    }
+
+    rect {
+      fill: #fff;
+    }
+
+    .node > rect {
+      stroke-width: 3px;
+      stroke: #333;
+      fill: none;
+    }
+
+    .node:hover {
+      cursor: pointer;
+      opacity: 0.4;
+    }
+
+    .edge rect {
+      fill: #fff
+    }
+
+    .edge path {
+      fill: none;
+      stroke: #333;
+      stroke-width: 1.5px;
+    }
+
+    .edge:hover {
+      cursor: pointer;
+      opacity: 0.4;
+    }
+
+    .cp {
+      opacity: 0;
+    }
+
+    .cp:hover {
+      cursor:pointer;
+      opacity: 1;
+    }
+
+    .big pre {
+      margin-left: -50px;
+      width: 1100px;
+    }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <script src="/js/d3.v2.min.js"></script>
+    <script src="/js/dagre.min.js"></script>
+  </head>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h1>Frontend Dev Week 3</h1>
+          <h3>Making Frontend Fun</h3>
+          <p>
+            <small><a href="mailto:dean.mao@reputation.com">Dean Mao</a></small>
+          </p>
+          <p><img src="http://www.reputation.com/pub/assets/img/logos/logo-marketing-header.png" style="border:none; box-shadow:none; background:none"></p>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### Fun:
+            - Rails
+            - Django
+            - Play
+
+            &nbsp;
+
+            ### Un-Fun:
+            - SpringMVC
+            - JSF
+            - Sinatra
+            - Express
+            - Flask
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## What makes a framework fun?
+
+            auto asset handling,
+            unit testing,
+            string sanitize security,
+            central place for routing,
+            model system,
+            code generators,
+            rest/resource driven,
+            environment differentiation,
+            convention,
+            controller filters,
+            data streaming,
+            params processing,
+            request forgery protection,
+            session management & object storage,
+            template caching & page caching,
+            migrations,
+            model type coercion,
+            header manipulation,
+            code reloader,
+            repl,
+            makefile system,
+            encryption system,
+            observer mechanism,
+            transaction type of system,
+            single place for configuration,
+            string inflection,
+            model object lifecycle,
+            model object serialization,
+            model nested querying,
+            model validations,
+            model unit testing mechanisms,
+            model attribute conventions
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## Features as done in Rails
+          </script>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Auto asset handling
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## asset configuration
+
+              What you add to the top of your js file:
+
+              ```javascript
+//= require jquery
+//= require jquery_ujs
+//= require turbolinks
+//= require_tree
+              ```
+
+              What you add to the top of your css file:
+
+              ```css
+/*
+ *= require ./bootstrap
+ *= require_self
+ *= require_tree .
+ */
+              ```
+
+              What gets generated in development env:
+
+              ```
+<link href="/assets/application.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/bootstrap.css?body=1" media="all" rel="stylesheet" />
+< script src="/assets/jquery.js?body=1"></ script >
+< script src="/assets/jquery_ujs.js?body=1"></ script >
+< script src="/assets/turbolinks.js?body=1"></ script >
+< script src="/assets/home.js?body=1"></ script >
+< script src="/assets/application.js?body=1"></ script >
+              ```
+
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## configuration
+
+              ```ruby
+config.serve_static_assets = false
+config.assets.js_compressor = :uglifier
+config.assets.compile = false
+config.assets.digest = true
+config.assets.version = '1.0'
+config.assets.precompile += %w( search.js )
+              ```
+            </script>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## central place for routing
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ```ruby
+resources :products do
+  member do
+    get 'short'
+    post 'toggle'
+  end
+
+  collection do
+    get 'sold'
+  end
+end
+
+namespace :admin do
+  resources :products
+end
+              ```
+            </script>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## code generators
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ```ruby
+rails generate scaffold user name:string age:integer address:string
+              ```
+
+              - generates model, controller, html, javascript, css
+              - creates a route in the central routing file
+              - generates all unit tests
+              - creates testing fixture data
+              - creates a migration file applicable to your database/nosql/etc
+              - context-sensitive unlike yeoman or other generators!
+            </script>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## environment differentiation
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### in development mode:
+
+              ```ruby
+config.cache_classes = false
+config.eager_load = false
+config.consider_all_requests_local = true
+config.action_controller.perform_caching = false
+config.action_mailer.raise_delivery_errors = false
+config.active_support.deprecation = :log
+config.active_record.migration_error = :page_load
+config.assets.debug = true
+              ```
+
+              ### in production mode:
+
+              ```ruby
+config.cache_classes = true
+config.eager_load = true
+config.consider_all_requests_local = false
+config.action_controller.perform_caching = true
+config.serve_static_assets = false
+config.assets.js_compressor = :uglifier
+config.assets.compile = false
+config.assets.digest = true
+config.assets.version = '1.0'
+config.log_level = :info
+config.i18n.fallbacks = true
+config.active_support.deprecation = :notify
+config.log_formatter = ::Logger::Formatter.new
+              ```
+            </script>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## convention
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## naming is like a pattern
+
+              - plural controller names
+              - singular model names
+              - named directories
+              - singular foreign key
+              - type conventions (_at, _on)
+              - string inflection
+              - orm vs activerecord
+              - activeresource etc
+            </script>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## controller & model lifecycle/filters
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## almost like aspects
+
+              - before_save
+              - before_filter
+              - after_validation
+              - before_commit
+              - after_create
+              - around_filter
+              - skip_before_filter
+            </script>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## params processing
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### can convert these query parameters:
+              ```
+user[name]=john&user[age]=16&user[pet][type]=dog
+              ```
+
+              &nbsp;
+
+              ### into structured data:
+              ```javascript
+              {
+                user: {
+                  name: 'john',
+                  age:  16,
+                  pet: {
+                    type: 'dog'
+                  }
+                }
+              }
+              ```
+
+              &nbsp;
+
+              ### for mass attribute assignment:
+
+              ```ruby
+              user = User.find(1)
+              user.update_attributes(params[:user])
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ### example controller method:
+
+              ```ruby
+def update
+  user = User.find(params[:id])
+  if user.update_attributes(params[:user])
+    render 'success'
+  else
+    render 'failure'
+  end
+end
+              ```
+            </script>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## security
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## CSRF
+
+              Added into controller base class:
+              ```
+protect_from_forgery with: :exception
+              ```
+
+              Injected into all pages:
+              ```
+<meta content="authenticity_token" name="csrf-param" />
+<meta content="msW7w14Kp5hus9ue0WGomkcLPFqqE6w/w=" name="csrf-token" />
+              ```
+
+              Added into all XHR requests as a header:
+              ```javascript
+// Make sure that every Ajax request sends the CSRF token
+CSRFProtection: function(xhr) {
+  var token = $('meta[name="csrf-token"]').attr('content');
+  if (token) xhr.setRequestHeader('X-CSRF-Token', token);
+}
+              ```
+
+              Checked a mixin class:
+              ```ruby
+def verified_request?
+  !protect_against_forgery? || request.get? || request.head? ||
+    form_authenticity_token == params[request_forgery_protection_token] ||
+    form_authenticity_token == request.headers['X-CSRF-Token']
+end
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## String comparison timing attacks
+
+              Compare signature digests before unmarshalling data:
+              ```ruby
+if secure_compare(digest, generate_digest(data))
+  Marshal.load(ActiveSupport::Base64.decode64(data))
+else
+  raise InvalidSignature
+end
+              ```
+
+              Constant time string compare:
+              ```ruby
+def secure_compare(a, b)
+  if a.length == b.length
+    result = 0
+    for i in 0..(a.length - 1)
+      result |= a[i] ^ b[i]
+    end
+    result == 0
+  else
+    false
+  end
+end
+              ```
+
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Session hijacking
+
+              - leaking cookies when going from ssl to non-ssl
+              - HSTS: HTTP Strict-Transport-Security
+              - `config.force_ssl = true` in config
+              - `force_ssl :except => :index` in controller class
+
+              &nbsp;
+
+              ### Route generation:
+              ```ruby
+scope :protocol => 'https://', :constraints => { :protocol => 'https://' } do
+  resources :sessions
+end
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## Session fixation
+
+              - attacker may save session id and give to target via XSS
+              - solved by doing `reset_session` on session creation
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## string sanitize
+
+              - can come from templating libraries
+              - safe + safe = safe
+              - safe + unsafe = unsafe
+              - obj.html_safe!
+              - many XSS attack vectors
+              - XSS via data protocol:
+
+              ```
+              < script >alert(\'XSS\')</ script >
+              =
+              data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## filter parameter logging
+
+              - removes certain parameters from appearing in log files
+              - `filter_parameter_logging :password` in controller
+              - `config.filter_parameters += [:password]` in global config
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## many, many, more security submodules
+            </script>
+          </section>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## migrations
+
+            - scripts for converting data between versions
+            - useful for testing production data
+            - can rollback to previous versions of data
+            - good for reference & documentation
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## code reloader
+
+            - can load code without restart
+
+            ```ruby
+config.cache_classes = false
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## repl
+
+            - console for debugging or testing
+
+            ```
+Loading development environment (Rails 4.0.0)
+irb(main):001:0> User.find(:all)
+irb(main):002:0> User.find(1).update_attribute(:name, 'john doe')
+irb(main):003:0> john = User.find_by_name('john')
+irb(main):004:0> john.destroy()
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            # The End
+
+            [https://github.com/deanmao/frontend-slides](https://github.com/deanmao/frontend-slides)
+          </script>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+    <script src="js/graph.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+      Reveal.addEventListener( 'slidechanged', function( event ) {
+          // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+          if (event.currentSlide.getAttribute('name') === 'graph') {
+
+          }
+      } );
+
+    </script>
+
+  </body>
+</html>
