@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <style>
+    svg {
+      display: inline-block;
+    }
+
+    text {
+      font: 300 16px "Helvetica Neue";
+    }
+
+    rect {
+      fill: #fff;
+    }
+
+    .node > rect {
+      stroke-width: 3px;
+      stroke: #333;
+      fill: none;
+    }
+
+    .node:hover {
+      cursor: pointer;
+      opacity: 0.4;
+    }
+
+    .edge rect {
+      fill: #fff
+    }
+
+    .edge path {
+      fill: none;
+      stroke: #333;
+      stroke-width: 1.5px;
+    }
+
+    .edge:hover {
+      cursor: pointer;
+      opacity: 0.4;
+    }
+
+    .cp {
+      opacity: 0;
+    }
+
+    .cp:hover {
+      cursor:pointer;
+      opacity: 1;
+    }
+
+    .big pre {
+      margin-left: -50px;
+      width: 1100px;
+    }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <script src="/js/d3.v2.min.js"></script>
+    <script src="/js/dagre.min.js"></script>
+  </head>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h1>Frontend Dev Week 4</h1>
+          <h3>Node Modules</h3>
+          <p>
+            <small><a href="mailto:dean.mao@reputation.com">Dean Mao</a></small>
+          </p>
+          <p><img src="http://www.reputation.com/pub/assets/img/logos/logo-marketing-header.png" style="border:none; box-shadow:none; background:none"></p>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### Node Modules:
+            - Basics
+            - Popular
+            - Native
+          </script>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ### Making your own module
+
+              #### Files needed:
+              - index.js
+              - package.json
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### package.json
+
+              ```javascript
+{
+    "name": "example",
+    "version": "0.0.1",
+    "author": "Dean Mao <deanmao@gmail.com>",
+    "description": "a nice description",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/reputation/project.git"
+    },
+    "dependencies": {
+        "coffee-script": "",
+        "underscore": ""
+    },
+    "main": "index.js"
+}
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Contents of index.js:
+
+              ```javascript
+exports.something = function() {
+  console.log("Hello, World");
+};
+              ```
+
+              ### How it is used:
+              ```javascript
+var example = require('example');
+example.something();
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Other useful directives in package.json:
+
+              - devDependencies: npm modules used only for development & testing
+              - bin: create a globally accessible script (if installed via npm -g)
+              - scripts: stuff to run before/after install
+              - private: prevent the package from being published online
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Sharing your package with the world:
+
+              - Run `npm install .` to ensure there are no errors on install
+              - Run `npm publish .` to publish your package
+              - Remove the `private` directive to ensure it can be published online
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Can have private dependencies:
+
+              ```javascript
+{
+    "dependencies": {
+        "my-private-npm-module": "git://github.com/user/project.git",
+    }
+}
+              ```
+            </script>
+          </section>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### Popular Dependencies:
+
+            - underscore: utilities lib
+            - aysnc: parallel/series execution lib
+            - request: http fetcher
+            - optimist: argument parsing
+            - express: web framework
+            - commander: argument parsing
+            - coffee-script: language
+            - colors: terminal colors
+            - uglify-js: js compression
+          </script>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ### Native module
+
+              #### Files needed:
+              - index.js
+              - package.json
+              - binding.gyp
+              - main.cpp
+
+              &nbsp;
+
+              #### Packages needed:
+              - node-gyp: `npm install node-gyp -g`
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Binding.gyp
+
+
+              ```javascript
+{
+  'targets': [
+    {
+      'target_name': 'binding',
+      'sources': [
+        'main.cpp'
+      ]
+    }
+  ]
+}
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### main.cpp
+
+              #### Basic includes
+              ```cpp
+#include <v8.h>
+#include <node.h>
+#include <string>
+#include <cstring>
+#include <iostream>
+#include <cstdlib>
+
+using namespace v8;
+using namespace std;
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### main.cpp
+
+              #### Creating a method
+              ```cpp
+void RegisterModule(v8::Handle<v8::Object> target) {
+    NODE_SET_METHOD(target, "myMethod", myMethod);
+
+NODE_MODULE(binding, RegisterModule);
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### main.cpp
+
+              #### Contents of the method
+              ```cpp
+Handle<Value> myMethod(const Arguments& args) {
+    HandleScope scope;
+    String::AsciiValue astr(args[0]);
+
+    Local<Value> output = Local<Value>::New(String::New(astr));
+    return scope.Close(output);
+}
+
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### main.cpp, async style
+
+              #### Create a work object
+              ```cpp
+struct context {
+  char* input;
+  char* output;
+  uv_work_t request;
+  v8::Persistent<v8::Function> callback;
+  v8::Persistent<v8::Function> errorCallback;
+};
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### main.cpp
+
+              #### Create the actual method:
+              ```cpp
+Handle<Value> myMethod(const Arguments& args) {
+    HandleScope scope;
+    String::AsciiValue mystr(args[0]);
+    context *ctx = calloc(1, sizeof(context);
+
+    // copy string argument into work object
+    ctx->input = new char[strlen(*mystr)+1];
+    strcpy(ctx->input, *mystr);
+
+    // assign callback function reference
+    Local<Function> callback = Local<Function>::Cast(args[1]);
+    ctx->callback = Persistent<Function>::New(callback);
+    ctx->request.data = ctx;
+
+    // put work object into thread pool
+    int status = uv_queue_work(uv_default_loop(), &ctx->request,
+         WorkOnContext, (uv_after_work_cb)MakeCallback);
+    return scope.Close(Undefined());
+}
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ### main.cpp
+
+              #### Do the actual work that could take a long time
+              ```cpp
+void WorkOnContext(uv_work_t* req) {
+    context* ctx = static_cast<context*>(req->data);
+    ctx->output = new char[strlen(*ctx->input)+1];
+    strcpy(ctx->output, *ctx->input);
+}
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### main.cpp
+
+              #### When WorkOnContext finishes, return to node
+              ```cpp
+void MakeCallback(uv_work_t* req) {
+    HandleScope scope;
+    TryCatch try_catch;
+    context* ctx = static_cast<context*>(req->data);
+
+    // do callback(null, result)
+    const unsigned argc = 2;
+    Local<Value> argv[argc] = {
+        Local<Value>::New(Null()),
+        Local<Value>::New(String::New(ctx->output))
+    };
+
+    ctx->callback->Call(Context::GetCurrent()->Global(), argc, argv);
+    free(ctx);
+}
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### index.js
+
+              #### Async style:
+              ```javascript
+var binding;
+var fs = require('fs');
+try {
+  if (fs.realpathSync(__dirname + '/build')) {
+    binding = require(__dirname + '/build/Release/binding');
+  }
+} catch (e) {
+  throw new Error('Cannot find binary library');
+}
+
+exports.something = function(yourString, callback) {
+  return binding.myMethod(yourString, callback);
+}
+              ```
+            </script>
+          </section>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### Simple example:
+            - [https://github.com/deanmao/secure-yaml-config](https://github.com/deanmao/secure-yaml-config)
+
+            &nbsp;
+
+            ### Native examples:
+            - [https://github.com/deanmao/node-chimera](https://github.com/deanmao/node-chimera)
+            - [https://github.com/andrew/node-sass](https://github.com/andrew/node-sass)
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            # The End
+
+            [https://github.com/deanmao/frontend-slides](https://github.com/deanmao/frontend-slides)
+          </script>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+    <script src="js/graph.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+      Reveal.addEventListener( 'slidechanged', function( event ) {
+          // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+          if (event.currentSlide.getAttribute('name') === 'graph') {
+
+          }
+      } );
+
+    </script>
+
+  </body>
+</html>

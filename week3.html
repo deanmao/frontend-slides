@@ -119,6 +119,7 @@
           <script type="text/template">
             ## What makes a framework fun?
 
+            internationalization,
             auto asset handling,
             unit testing,
             string sanitize security,
@@ -127,11 +128,11 @@
             code generators,
             rest/resource driven,
             environment differentiation,
-            convention,
+            convention patterns,
             controller filters,
             data streaming,
             params processing,
-            request forgery protection,
+            auto request forgery protection,
             session management & object storage,
             template caching & page caching,
             migrations,
@@ -231,20 +232,21 @@ config.assets.precompile += %w( search.js )
           <section data-markdown>
             <script type="text/template">
               ```ruby
+root 'home#index'
+
+get 'products/:id' => 'catalog#view'
+
 resources :products do
   member do
     get 'short'
     post 'toggle'
-  end
-
-  collection do
-    get 'sold'
   end
 end
 
 namespace :admin do
   resources :products
 end
+
               ```
             </script>
           </section>
@@ -269,6 +271,7 @@ rails generate scaffold user name:string age:integer address:string
               - creates testing fixture data
               - creates a migration file applicable to your database/nosql/etc
               - context-sensitive unlike yeoman or other generators!
+              - 3rd party plugins provide alternate output (rspec/testunit/factorygirl)
             </script>
           </section>
         </section>
@@ -311,6 +314,7 @@ config.log_level = :info
 config.i18n.fallbacks = true
 config.active_support.deprecation = :notify
 config.log_formatter = ::Logger::Formatter.new
+config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
               ```
             </script>
           </section>
@@ -449,7 +453,7 @@ CSRFProtection: function(xhr) {
 }
               ```
 
-              Checked a mixin class:
+              Checked via mixin class:
               ```ruby
 def verified_request?
   !protect_against_forgery? || request.get? || request.head? ||
@@ -527,7 +531,7 @@ end
               - can come from templating libraries
               - safe + safe = safe
               - safe + unsafe = unsafe
-              - obj.html_safe!
+              - "my custom string".html_safe!
               - many XSS attack vectors
               - XSS via data protocol:
 
@@ -552,6 +556,8 @@ end
           <section data-markdown>
             <script type="text/template">
               ## many, many, more security submodules
+
+              Rely on the framework to provide security, NOT security audits!
             </script>
           </section>
         </section>
