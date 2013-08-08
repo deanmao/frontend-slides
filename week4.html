@@ -103,6 +103,7 @@
             - Basics
             - Popular
             - Native
+            - Full Native Example
           </script>
         </section>
 
@@ -417,7 +418,6 @@ exports.something = function(yourString, callback) {
             &nbsp;
 
             ### Native examples:
-            - [https://github.com/deanmao/node-chimera](https://github.com/deanmao/node-chimera)
             - [https://github.com/andrew/node-sass](https://github.com/andrew/node-sass)
           </script>
         </section>
@@ -688,17 +688,17 @@ void Chimera::callback(const QString &errorResult, const QString &result)
 
               #### Perform node callback:
               ```cpp
-        const unsigned argc = 2;
-        Local<Value> argv[argc] = {
-            Local<Value>::New(Null()),
-            Local<Value>::New(top_v8::FromQString(work->result))
-        };
+const unsigned argc = 2;
+Local<Value> argv[argc] = {
+    Local<Value>::New(Null()),
+    Local<Value>::New(top_v8::FromQString(work->result))
+};
 
-        TryCatch try_catch;
-        work->callback->Call(Context::GetCurrent()->Global(), argc, argv);
-        if (try_catch.HasCaught()) {
-            node::FatalException(try_catch);
-        }
+TryCatch try_catch;
+work->callback->Call(Context::GetCurrent()->Global(), argc, argv);
+if (try_catch.HasCaught()) {
+    node::FatalException(try_catch);
+}
               ```
 
             </script>
