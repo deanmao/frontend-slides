@@ -314,7 +314,154 @@ make test
 
           <section data-markdown>
             <script type="text/template">
-              # demo time
+              ### Almost demo time...
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Wait guys, we need to talk about coffeescript
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Why?
+
+              ```javascript
+var self = this;
+startServer(function(err, server, config) {
+  self.openDatabase(function(err, connection) {
+    self.connectToRedis(function(err, db) {
+      if (config && config.env && config.env.name === 'production') {
+        self.startSystem({
+          server: server,
+          database: connection,
+          apparatus: {
+            env: config.env.name,
+            query: 'something'
+          }
+        });
+      }
+    });
+  });
+});
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Because!
+
+              ```coffeescript
+startServer (err, server, config) =>
+  @openDatabase (err, connection) =>
+    @connectToRedis (err, db) =>
+      if config?.env?.name == 'production'
+        @startSystem
+          server: server
+          database: connection
+          apparatus:
+            env: config.env.name
+            query: 'something'
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Quick intro:
+
+              This is a function that passes the outer scope's 'this'
+              inside so that we can call a method, and returns a string
+              ```coffeescript
+myFunction = (err, res) =>
+  @outerScopeMethod(res)
+  'my special string'
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Check a deeply nested property without using &amp;&amp;
+
+              ```coffeescript
+myMethod = (config, callback) ->
+  output = config?.properties?.api?.keys?.s3?.secret
+  callback?(null, output)
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Quick ranges/slicing/splats
+
+              ```coffeescript
+arrayOfTenNumbers = [0...10]
+myString = "thisreallylongword"
+assert(myString[4..9] == 'really')
+[a, b, c] = [0..10]
+assert(c == 2)
+              ```
+              Note we do not need triple equals '===' for string comparison
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Classical inheritance
+
+              ```coffeescript
+class Cat extends Animal
+  constructor: (@name, age) ->
+    @age = age
+
+  talk: (words) ->
+    super("cat meows: #{words}")
+              ```
+              Note the string interpolation!
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### passing a hash into a method
+
+              ```coffeescript
+myMethod(
+  key: 'property'
+  name: 'john'
+  age: 15
+  school:
+    name: 'palo alto high'
+    distance: 24
+)
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Basically...
+
+              - minimal function syntax via ()->
+              - yaml style hash/object syntax
+              - shorthand syntax for splats, operators, etc
+              - @ symbol for replacing 'this'
+              - indentation to replace curly braces
+              - classical inheritance available
+              - no need for underscore/lodash for looping
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              # okay, demo time
+
+              Example code is in CoffeeScript!
             </script>
           </section>
         </section>
