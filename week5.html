@@ -90,7 +90,7 @@
 
         <section>
           <h1>Frontend Dev Week 5</h1>
-          <h3>Testing</h3>
+          <h3>Unit Testing in Node</h3>
           <p>
             <small><a href="mailto:dean.mao@reputation.com">Dean Mao</a></small>
           </p>
@@ -99,74 +99,224 @@
 
         <section data-markdown>
           <script type="text/template">
-            ###
+            ### Agenda
+
+            - Common libraries/frameworks
+            - Refactoring code to become testable
+            - Basic overview of testing
+            - Testing R4Me
           </script>
         </section>
 
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ### Common libraries for unit testing
+
+              - mocha: most common bdd framework
+              - vows: oldest bdd node framework
+              - expresso: older framework from authors of mocha
+              - sinon: most common mocking library
+              - rewire: dependency injection lib for testing
+              - chai: bdd assertion library
+              - supertest: for testing web requests
+              - jasmine-node: jasmine for node
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Libraries we will talk about today
+
+              - mocha: main testing framework
+              - sinon: mocks & stubs
+              - rewire: accessing private variables
+              - chai: more assertion methods
+              - supertest: because we use express
+            </script>
+          </section>
         </section>
 
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ### Refactoring code to become testable
+
+              - if the code is hard to test, it is also probably hard to read
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Hard to test code:
+
+              ```javascript
+module.exports = function(app) {
+  var user = require('./endpoints/user')(app);
+  app.post('/endpoint/user/login', user.universalLogin);
+}
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Expose requires to top level
+
+              ```javascript
+var user = require('./endpoints/user');
+module.exports = function(app) {
+  user = user(app);
+  app.post('/endpoint/user/login', user.universalLogin);
+}
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Hard to test code:
+
+              ```javascript
+module.exports = function(app) {
+  function doSomething() {
+
+  }
+
+  doSomething();
+}
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Basically...
+
+              - move functions you want to test to top level
+              - do not embed require() statements deep in the code
+              - break up large functions into smaller ones
+              - flatten deeply nested code
+              - avoid multiple exits in any given function
+              - make code DRY
+            </script>
+          </section>
         </section>
 
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ### Basic Overview of testing
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Mocha
+
+              ```javascript
+describe('a set of tests', function() {
+  beforeEach(function(done) {
+    wipeOutDatabase(function() {
+      done();
+    });
+  });
+  it('single test', function(done) {
+    assert(1 == 1);
+    done();
+  });
+})
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Chai
+
+              ```javascript
+res.body.outputValue.should.contain('text');
+should.not.exist(err);
+myVariable.should.equal('something');
+myObject.should.have.property('myProperty');
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Sinon
+
+              ```javascript
+sinon.spy(jQuery, 'ajax');
+jQuery.ajax.should.have.been.calledOnce();
+var myStub = sinon.stub();
+myStub.callsArgWith(1, null, 'result');
+myStub(callback);
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Rewire
+
+              In a file called "make_directory.js":
+              ```javascript
+var fs = require('fs');
+fs.mkdir('myDirectory', function(err) {
+  console.log('done');
+})
+              ```
+
+              In your testing code:
+
+              ```javascript
+makeDirectory = rewire('../code/make_directory');
+makeDirectory.__set__({
+  fs: function(path, callback) {
+    console.log('making fake directory: ', path);
+    callback();
+  }
+});
+              ```
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### Supertest
+
+              ```javascript
+request(app).post('/user/login').send({
+  email: 'user@example.com',
+  password: 'password'
+}).end(function(err, res) {
+  res.body.should.have.property('success');
+});
+              ```
+            </script>
+          </section>
         </section>
 
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
-        </section>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ### Testing R4Me
 
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
-        </section>
+              ```
+git fetch
+git checkout dean
+make test
+              ```
+            </script>
+          </section>
 
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
-        </section>
-
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
-        </section>
-
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
-        </section>
-
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
-        </section>
-
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
-        </section>
-
-        <section data-markdown>
-          <script type="text/template">
-            ###
-          </script>
+          <section data-markdown>
+            <script type="text/template">
+              # demo time
+            </script>
+          </section>
         </section>
 
         <section data-markdown>
